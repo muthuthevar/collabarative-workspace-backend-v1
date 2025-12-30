@@ -1,9 +1,7 @@
-import { Role } from "../enums/Role.enum.js";
-
 export class WorkspaceMember {
   readonly workspaceId: string;
   readonly userId: string;
-  role: Role;
+  role: string;
   readonly joinedAt: Date;
 
   constructor(data: WorkspaceMember) {

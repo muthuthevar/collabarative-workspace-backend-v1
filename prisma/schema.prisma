@@ -62,7 +62,7 @@ model Workspace {
 model WorkspaceMember {
   workspaceId String   @map("workspace_id")
   userId      String   @map("user_id")
-  role        Role     @default(MEMBER)
+  role        String   @default("MEMBER")
   joinedAt    DateTime @default(now()) @map("joined_at")
 
   workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)

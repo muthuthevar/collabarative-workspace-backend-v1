@@ -2,7 +2,7 @@ export class Board {
   readonly id: string;
   readonly workspaceId: string;
   title: string;
-  content: object;
+  content: object | null;
   readonly createdBy: string;
   readonly createdAt: Date;
   updatedAt: Date;
