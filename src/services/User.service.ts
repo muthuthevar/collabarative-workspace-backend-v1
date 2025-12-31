@@ -1,6 +1,6 @@
 import { User } from "../domain/entities/User.entity.js";
 import { type IUserRepository } from "../repositories/interfaces/IUserRepository.js";
-import { UserRepository } from "../repositories/implementations/UserRepository.js";
+import { UserRepository } from "../repositories/implementations/User.repository.js";
 import { PasswordUtil } from "../utils/password.util.js";
 import { JwtUtil } from "../utils/jwt.util.js";
 import {

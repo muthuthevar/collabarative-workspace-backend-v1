@@ -1,11 +1,8 @@
 import { ActivityLog } from "../domain/entities/ActivityLog.entity.js";
-import { Permission, hasPermission } from "../domain/enums/Permission.enum.js";
-import { Role } from "../domain/enums/Role.enum.js";
 import { type IActivityLogRepository } from "../repositories/interfaces/IActivityLogRepository.js";
 import { type IWorkspaceRepository } from "../repositories/interfaces/IWorkspaceRepository.js";
-import { ActivityLogRepository } from "../repositories/implementations/ActivityLogRepository.js";
-import { WorkspaceRepository } from "../repositories/implementations/WorkspaceRepository.js";
-import { ForbiddenError } from "../utils/errors.js";
+import { ActivityLogRepository } from "../repositories/implementations/ActivityLog.repository.js";
+import { WorkspaceRepository } from "../repositories/implementations/Workspace.repository.js";
 
 export class ActivityLogService {
   private activityLogRepository: IActivityLogRepository;

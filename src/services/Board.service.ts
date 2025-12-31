@@ -5,9 +5,9 @@ import { ActivityType } from "../domain/enums/ActivityType.enum.js";
 import { type IBoardRepository } from "../repositories/interfaces/IBoardRepository.js";
 import { type IWorkspaceRepository } from "../repositories/interfaces/IWorkspaceRepository.js";
 import { type IActivityLogRepository } from "../repositories/interfaces/IActivityLogRepository.js";
-import { BoardRepository } from "../repositories/implementations/BoardRepository.js";
-import { WorkspaceRepository } from "../repositories/implementations/WorkspaceRepository.js";
-import { ActivityLogRepository } from "../repositories/implementations/ActivityLogRepository.js";
+import { BoardRepository } from "../repositories/implementations/Board.repository.js";
+import { WorkspaceRepository } from "../repositories/implementations/Workspace.repository.js";
+import { ActivityLogRepository } from "../repositories/implementations/ActivityLog.repository.js";
 import { NotFoundError, ForbiddenError } from "../utils/errors.js";
 import { logger } from "../utils/logger.js";
 

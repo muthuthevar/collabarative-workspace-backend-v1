@@ -4,8 +4,8 @@ import { Role } from "../domain/enums/Role.enum.js";
 import { hasPermission, Permission } from "../domain/enums/Permission.enum.js";
 import { type IWorkspaceRepository } from "../repositories/interfaces/IWorkspaceRepository.js";
 import { type IActivityLogRepository } from "../repositories/interfaces/IActivityLogRepository.js";
-import { WorkspaceRepository } from "../repositories/implementations/WorkspaceRepository.js";
-import { ActivityLogRepository } from "../repositories/implementations/ActivityLogRepository.js";
+import { WorkspaceRepository } from "../repositories/implementations/Workspace.repository.js";
+import { ActivityLogRepository } from "../repositories/implementations/ActivityLog.repository.js";
 import { ActivityType } from "../domain/enums/ActivityType.enum.js";
 import {
   NotFoundError,
