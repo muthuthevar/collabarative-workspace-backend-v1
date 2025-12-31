@@ -1,0 +1,65 @@
+import { ActivityLog } from "../domain/entities/ActivityLog.entity.js";
+import { Permission, hasPermission } from "../domain/enums/Permission.enum.js";
+import { Role } from "../domain/enums/Role.enum.js";
+import { type IActivityLogRepository } from "../repositories/interfaces/IActivityLogRepository.js";
+import { type IWorkspaceRepository } from "../repositories/interfaces/IWorkspaceRepository.js";
+import { ActivityLogRepository } from "../repositories/implementations/ActivityLogRepository.js";
+import { WorkspaceRepository } from "../repositories/implementations/WorkspaceRepository.js";
+import { ForbiddenError } from "../utils/errors.js";
+
+export class ActivityLogService {
+  private activityLogRepository: IActivityLogRepository;
+  private workspaceRepository: IWorkspaceRepository;
+
+  constructor(
+    activityLogRepository?: IActivityLogRepository,
+    workspaceRepository?: IWorkspaceRepository
+  ) {
+    this.activityLogRepository =
+      activityLogRepository || new ActivityLogRepository();
+    this.workspaceRepository = workspaceRepository || new WorkspaceRepository();
+  }
+
+  async getWorkspaceActivityLogs(
+    workspaceId: string,
+    userId: string,
+    limit?: number
+  ): Promise<ActivityLog[]> {
+    // await this.checkPermission(
+    //   workspaceId,
+    //   userId,
+    //   Permission.ACTIVITY_LOG_VIEW
+    // );
+
+    return await this.activityLogRepository.findByWorkspaceId(
+      workspaceId,
+      limit
+    );
+  }
+
+  async getUserActivityLogs(
+    userId: string,
+    limit?: number
+  ): Promise<ActivityLog[]> {
+    return await this.activityLogRepository.findByUserId(userId, limit);
+  }
+
+  //   private async checkPermission(
+  //     workspaceId: string,
+  //     userId: string,
+  //     permission: Permission
+  //   ): Promise<void> {
+  //     const role = await this.workspaceRepository.getMemberRole(
+  //       workspaceId,
+  //       userId
+  //     );
+
+  //     if (!role) {
+  //       throw new ForbiddenError("You are not a member of this workspace");
+  //     }
+
+  //     if (!hasPermission(role as Role, permission)) {
+  //       throw new ForbiddenError("You do not have permission for this action");
+  //     }
+  //   }
+}
