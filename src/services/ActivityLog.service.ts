@@ -5,17 +5,7 @@ import { ActivityLogRepository } from "../repositories/implementations/ActivityL
 import { WorkspaceRepository } from "../repositories/implementations/Workspace.repository.js";
 
 export class ActivityLogService {
-  private activityLogRepository: IActivityLogRepository;
-  private workspaceRepository: IWorkspaceRepository;
-
-  constructor(
-    activityLogRepository?: IActivityLogRepository,
-    workspaceRepository?: IWorkspaceRepository
-  ) {
-    this.activityLogRepository =
-      activityLogRepository || new ActivityLogRepository();
-    this.workspaceRepository = workspaceRepository || new WorkspaceRepository();
-  }
+  constructor(private activityLogRepository: IActivityLogRepository) {}
 
   async getWorkspaceActivityLogs(
     workspaceId: string,
