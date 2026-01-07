@@ -10,6 +10,7 @@ import { WorkspaceRepository } from "../repositories/implementations/Workspace.r
 import { ActivityLogRepository } from "../repositories/implementations/ActivityLog.repository.js";
 import { NotFoundError, ForbiddenError } from "../utils/errors.js";
 import { logger } from "../utils/logger.js";
+import type { WebSocketManager } from "../websocket/WebSocketManager.js";
 
 export interface CreateBoardDto {
   workspaceId: string;
@@ -108,6 +109,20 @@ export class BoardService {
       action: ActivityType.BOARD_UPDATED,
       metadata: { boardId, updates: data },
     });
+
+    // Broadcast WebSocket event if content was updated
+    if (data.content !== undefined) {
+      const wsManager = (global as any).wsManager as WebSocketManager;
+      if (wsManager) {
+        wsManager.broadcastBoardUpdate(boardId, {
+          boardId,
+          content: data.content!,
+          userId,
+          timestamp: Date.now(),
+        });
+        logger.info(`Board update broadcasted via WebSocket: ${boardId}`);
+      }
+    }
 
     logger.info(`Board updated: ${boardId}`);
   }
