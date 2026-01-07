@@ -28,6 +28,7 @@ export class WebSocketManager {
   ) {
     logger.info(`New Websocket connection attempt`);
     const token = this.extractToken(request);
+    console.log(token)
     if (!token) {
       ws.close(1008, "Authentication required");
       return;
@@ -44,7 +45,9 @@ export class WebSocketManager {
       this.clients.get(ws.userId)!.add(ws);
 
       ws.on("message", (data: Buffer) => this.handleMessage(ws, data));
-    } catch (error) {}
+    } catch (error) {
+      logger.error(`Failed to connect: Error:${error}`)
+    }
   }
 
   private setupHeartbeat(): void {
@@ -66,6 +69,17 @@ export class WebSocketManager {
     this.redis = await RedisConfig.getInstance();
   }
 
+  /**
+   * Extracts the token from the WebSocket connection request.
+   * 
+   * To send the token from Postman, you can do the following:
+   * 1. Use the "New WebSocket Request" feature (only Postman desktop app supports WS requests).
+   * 2. Add the token as a query parameter in the WebSocket URL, e.g.:
+   *    ws://localhost:3000/ws?token=YOUR_JWT_TOKEN
+   *    (replace YOUR_JWT_TOKEN with your actual token)
+   * 3. Alternatively, you can send the token as a header "Sec-WebSocket-Protocol" or in cookies,
+   *    but this code currently only supports tokens in the query string.
+   */
   private extractToken(request: IncomingMessage) {
     const url = new URL(request.url || "", `http://${request.headers.host}`);
     return url.searchParams.get("token");
@@ -84,7 +98,7 @@ export class WebSocketManager {
         case WebSocketEventType.BOARD_JOIN:
           await this.handleBoardJoin(ws, message);
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   private handleBoardJoin(
@@ -138,17 +152,17 @@ export class WebSocketManager {
     });
   }
 
-  private handleBoardLeave() {}
+  private handleBoardLeave() { }
 
-  private handleBoardUpdate() {}
+  private handleBoardUpdate() { }
 
-  private handleCursorUpdate() {}
+  private handleCursorUpdate() { }
 
-  private handleWorkspaceJoin() {}
+  private handleWorkspaceJoin() { }
 
-  private handleWorkspaceLeave() {}
+  private handleWorkspaceLeave() { }
 
-  private handleUserTyping() {}
+  private handleUserTyping() { }
 
   private sendError(ws: AuthenticatedWebSocket, error: string): void {
     this.sendToClient(ws, {
