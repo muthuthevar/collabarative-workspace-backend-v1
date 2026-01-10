@@ -10,7 +10,7 @@ export const createBoardSchema = Joi.object({
     "string.max": "Board title must not exceed 200 characters",
     "any.required": "Board title is required",
   }),
-  content: Joi.object().optional(),
+  content: Joi.string().allow(null, "").optional(),
 });
 
 export const updateBoardSchema = Joi.object({
@@ -18,5 +18,5 @@ export const updateBoardSchema = Joi.object({
     "string.min": "Board title must be at least 3 characters long",
     "string.max": "Board title must not exceed 200 characters",
   }),
-  content: Joi.object().optional(),
+  content: Joi.string().allow(null, "").optional(),
 }).min(1);

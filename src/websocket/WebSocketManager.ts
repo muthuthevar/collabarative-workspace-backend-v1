@@ -293,6 +293,7 @@ export class WebSocketManager {
         payload: {
           boardId,
           userId: ws.userId,
+          userName: payload.userName,
           x,
           y,
           timestamp: Date.now(),

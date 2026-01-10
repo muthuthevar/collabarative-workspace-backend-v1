@@ -22,17 +22,17 @@ export interface WebSocketMessage {
 
 export interface BoardUpdatePayload {
   boardId: string;
-  content: object;
+  content: string;
   userId: string;
   timestamp: number;
 }
 
 export interface CursorPosition {
   boardId: string;
-  userId: string;
+  userId?: string;
   x: number;
   y: number;
-  userName: string;
+  userName?: string;
 }
 
 export interface UserPresence {

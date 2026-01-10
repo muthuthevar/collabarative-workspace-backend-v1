@@ -15,13 +15,13 @@ import type { WebSocketManager } from "../websocket/WebSocketManager.js";
 export interface CreateBoardDto {
   workspaceId: string;
   title: string;
-  content?: object | null;
+  content?: string | null;
   createdBy: string;
 }
 
 export interface UpdateBoardDto {
   title?: string;
-  content?: object | null;
+  content?: string | null;
 }
 
 export class BoardService {

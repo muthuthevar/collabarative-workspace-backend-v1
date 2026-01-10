@@ -3,13 +3,13 @@ import type { Board } from "../../domain/entities/Board.entity.js";
 export type CreateBoardDto = {
   workspaceId: string;
   title: string;
-  content?: object | null;
+  content?: string | null;
   createdBy: string;
 };
 
 export type UpdateBoardDto = {
   title?: string;
-  content?: object | null;
+  content?: string | null;
 };
 
 export interface IBoardRepository {

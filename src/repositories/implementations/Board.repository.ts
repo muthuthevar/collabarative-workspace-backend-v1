@@ -9,12 +9,19 @@ import type {
 export class BoardRepository implements IBoardRepository {
   async findById(id: string): Promise<Board | null> {
     const board = await prisma.board.findUnique({ where: { id } });
-    return board as Board | null;
+    if (!board) return null;
+    return {
+      ...board,
+      content: typeof board.content === 'string' ? board.content : JSON.stringify(board.content || ''),
+    } as Board;
   }
 
   async findByWorkspaceId(workspaceId: string): Promise<Board[]> {
     const boards = await prisma.board.findMany({ where: { workspaceId } });
-    return boards as Board[];
+    return boards.map(board => ({
+      ...board,
+      content: typeof board.content === 'string' ? board.content : JSON.stringify(board.content || ''),
+    })) as Board[];
   }
 
   async create(data: CreateBoardDto): Promise<Board> {
@@ -22,11 +29,14 @@ export class BoardRepository implements IBoardRepository {
       data: {
         workspaceId: data.workspaceId,
         title: data.title,
-        content: data.content || {},
+        content: data.content || "",
         createdBy: data.createdBy,
       },
     });
-    return board as Board;
+    return {
+      ...board,
+      content: typeof board.content === 'string' ? board.content : JSON.stringify(board.content || ''),
+    } as Board;
   }
 
   async update(id: string, data: UpdateBoardDto): Promise<void> {

@@ -20,26 +20,29 @@ const startServer = async () => {
     // Create Express app
     const app = createApp();
 
-    const server = createServer(app)
-
+    const server = createServer(app);
 
     // Create websocket server
     const wss = new WebSocketServer({
       server,
-      path: '/ws'
+      path: "/ws",
     });
 
-    const wsManager = new WebSocketManager(wss)
+    const wsManager = new WebSocketManager(wss);
+
+    // Make WebSocketManager globally accessible for services
+    (global as any).wsManager = wsManager;
+
     wss.on("connection", (ws, request) => {
-      wsManager.handleConnection(ws, request)
-    })
+      wsManager.handleConnection(ws, request);
+    });
 
     // Start server
     server.listen(config.port, () => {
       logger.info(`Server running on port ${config.port}`);
       logger.info(`Environment: ${config.env}`);
       logger.info(`API URL: http://localhost:${config.port}/api/v1`);
-      logger.info(`WebSocket URL: ws://localhost:${config.port}/ws`)
+      logger.info(`WebSocket URL: ws://localhost:${config.port}/ws`);
     });
   } catch (error) {
     logger.error("Failed to start server:", error);
